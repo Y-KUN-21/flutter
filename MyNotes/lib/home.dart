@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mytask/models/notes.dart';
-import 'package:mytask/widgets/Listdata.dart';
 import 'package:mytask/widgets/addnotes.dart';
 import 'package:mytask/utils/db_helper.dart';
 class Home extends StatefulWidget {
@@ -13,14 +12,14 @@ class _HomeState extends State<Home> {
   DbHelper helper = DbHelper();
   Note note;
   void update() {
-    Listdata();
+
   }
   
   @override
   void initState() {
     super.initState();
   
-    Listdata();
+
   }
 
   @override
@@ -78,7 +77,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            Listdata()
+
           ],
         ),
       ),

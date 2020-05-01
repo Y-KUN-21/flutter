@@ -54,13 +54,13 @@ class DbHelper {
   }
 
   Future<int> insertNote(Note note) async {
-    var db = await this.database;
+    Database db = await this.database;
     var result = await db.insert(noteTable, note.toMap());
     return result;
   }
 
   Future<int> updateNote(Note note) async {
-    Database db = await this.database;
+    var db = await this.database;
     var result = await db.update(noteTable, note.toMap(),
         where: '$colId = ?', whereArgs: [note.id]);
     return result;

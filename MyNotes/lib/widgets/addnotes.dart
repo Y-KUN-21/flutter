@@ -190,7 +190,7 @@ class _AddNoteState extends State<AddNote> {
     note.date = DateFormat.yMMMd().format(DateTime.now());
     if (note.id != null) {
       await helper.updateNote(note);
-    } else {
+    } else  {
       await helper.insertNote(note);
     }
     Navigator.pop(context, true);
