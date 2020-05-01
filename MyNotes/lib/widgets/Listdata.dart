@@ -62,7 +62,6 @@ class _ListdataState extends State<Listdata> {
   @override
   void initState() {
     super.initState();
-    updateListView();
   }
 
   @override
@@ -73,7 +72,7 @@ class _ListdataState extends State<Listdata> {
     }
     return Expanded(
         child: ListView.builder(
-            itemCount: 0,
+            itemCount: count,
             itemBuilder: (context, int position) {
               return Padding(
                 padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
@@ -109,16 +108,15 @@ class _ListdataState extends State<Listdata> {
                                   color: Colors.black,
                                   letterSpacing: 1.0,
                                 )),
-                            subtitle:
-                                Text((this.notelist[position].description),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.manrope(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      letterSpacing: 1.0,
-                                    )),
+                            subtitle: Text((this.notelist[position].date),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.manrope(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  letterSpacing: 1.0,
+                                )),
                             trailing: Text((this.notelist[position].date),
                                 style: GoogleFonts.manrope(
                                   fontWeight: FontWeight.w400,
@@ -169,6 +167,16 @@ class _ListdataState extends State<Listdata> {
         ],
       ),
     );
+  }
+
+  Widget counter() {
+    return Text("$count",
+        style: GoogleFonts.manrope(
+          fontWeight: FontWeight.w400,
+          fontSize: 45,
+          color: Colors.white60,
+          letterSpacing: 1.0,
+        ));
   }
 
   void updateListView() async {

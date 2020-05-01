@@ -39,6 +39,7 @@ class _AddNoteState extends State<AddNote> {
     titleController.text = note.title;
     descriptionController.text = note.description;
     return Scaffold(
+      backgroundColor: Color(0xffEA7773),
       appBar: AppBar(
         title: Text(
           appbartitle,
@@ -54,7 +55,10 @@ class _AddNoteState extends State<AddNote> {
         backgroundColor: Color(0xffEA7773),
       ),
       body: Container(
-        color: Color(0xffffffff),
+        decoration: BoxDecoration(
+            color: Color(0xff333945),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20), topLeft: Radius.circular(20))),
         child: ListView(children: <Widget>[
           titlefield(),
           descriptionfield(),
@@ -73,25 +77,26 @@ class _AddNoteState extends State<AddNote> {
 
   Widget titlefield() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+      padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
       child: TextField(
         controller: titleController,
         onChanged: (value) {
           upadateTitle();
         },
         style: TextStyle(
-            color: Color(0xffEA7773),
-            fontWeight: FontWeight.w500,
+             color: Color(0xffffffff),
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
             letterSpacing: 1.0),
         cursorColor: Colors.black,
         decoration: InputDecoration(
           hintText: "Note title.",
           hintStyle: TextStyle(
-              fontSize: 15.0, color: Colors.black, fontWeight: FontWeight.w300),
+              fontSize: 15.0, color: Colors.white, fontWeight: FontWeight.w300),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(20.0),
             borderSide: new BorderSide(
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ),
@@ -101,7 +106,7 @@ class _AddNoteState extends State<AddNote> {
 
   Widget descriptionfield() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+      padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
       child: TextField(
         maxLines: 8,
         controller: descriptionController,
@@ -109,18 +114,19 @@ class _AddNoteState extends State<AddNote> {
           updateDescription();
         },
         style: TextStyle(
-            color: Color(0xffEA7773),
-            fontWeight: FontWeight.w500,
+            color: Color(0xffffffff),
+            fontWeight: FontWeight.w400,
+            fontSize: 25,
             letterSpacing: 1.0),
         cursorColor: Colors.black,
         decoration: InputDecoration(
           hintText: "Description.",
           hintStyle: TextStyle(
-              fontSize: 25.0, color: Colors.black, fontWeight: FontWeight.w300),
+              fontSize: 25.0, color: Colors.white, fontWeight: FontWeight.w300),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(20.0),
             borderSide: new BorderSide(
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ),
@@ -133,7 +139,7 @@ class _AddNoteState extends State<AddNote> {
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         child: Theme(
           data: Theme.of(context).copyWith(
-            canvasColor: Color(0xffffffff),
+            canvasColor: Color(0xffEA7773),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,7 +148,7 @@ class _AddNoteState extends State<AddNote> {
                   style: GoogleFonts.manrope(
                     fontWeight: FontWeight.w400,
                     fontSize: 25,
-                    color: Colors.black,
+                    color: Colors.white,
                     letterSpacing: 1.0,
                   )),
               DropdownButton<String>(
@@ -154,7 +160,7 @@ class _AddNoteState extends State<AddNote> {
                 }).toList(),
                 value: getPriorityAsString(note.priority),
                 style: TextStyle(
-                  color: Color(0xffEA7773),
+                  color: Colors.white,
                   fontWeight: FontWeight.w500,
                   fontSize: 25,
                 ),
@@ -187,7 +193,7 @@ class _AddNoteState extends State<AddNote> {
     } else {
       await helper.insertNote(note);
     }
-    Navigator.pop(context);
+    Navigator.pop(context, true);
   }
 
   String getPriorityAsString(int value) {

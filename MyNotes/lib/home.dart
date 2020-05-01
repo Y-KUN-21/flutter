@@ -4,7 +4,6 @@ import 'package:mytask/models/notes.dart';
 import 'package:mytask/widgets/Listdata.dart';
 import 'package:mytask/widgets/addnotes.dart';
 import 'package:mytask/utils/db_helper.dart';
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -13,10 +12,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   DbHelper helper = DbHelper();
   Note note;
-
+  void update() {
+    Listdata();
+  }
+  
   @override
   void initState() {
     super.initState();
+  
     Listdata();
   }
 
@@ -63,13 +66,13 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-                      Text("10",
-                          style: GoogleFonts.manrope(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 45,
-                            color: Colors.white60,
-                            letterSpacing: 1.0,
-                          )),
+                      Text("dsa",
+                        style: GoogleFonts.manrope(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 45,
+                          color: Colors.white60,
+                          letterSpacing: 1.0,
+                        ))
                     ],
                   ),
                 ),
@@ -82,7 +85,7 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         tooltip: "Add new note.",
         onPressed: () {
-          navigateToNoteDetail(Note('', '', 2, ''), "Add note");
+          navigateToNoteDetail(Note('','',2,''), "Add note");
         },
         backgroundColor: Color(0xffEA7773),
         child: Icon(Icons.note_add),
@@ -90,9 +93,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void navigateToNoteDetail(Note note, String title) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
+  void navigateToNoteDetail(Note note, String title)  async {
+   bool result = await  Navigator.push(context, MaterialPageRoute(builder: (context) {
       return AddNote(note, title);
     }));
+    if (result){
+      update();
+    }
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mytask/home.dart';
+import 'package:mytask/homepage.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,12 +8,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MyNotes',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        primaryColorBrightness: Brightness.dark
       ),
-      home: Home(),
+      home: Homepage(),
     );
   }
 }

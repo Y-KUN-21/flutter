@@ -2,12 +2,13 @@ class Note {
   int _id;
   String _title;
   String _description;
-  int _priority;
   String _date;
+  int _priority;
+ 
 
-  Note(this._title, this._description, this._priority, this._date);
+  Note(this._title, this._date, this._priority, [this._description]);
 
-  Note.withId(this._title, this._description, this._priority, this._date);
+  Note.withId(this._id, this._title, this._date, this._priority, [this._description]);
 
   int get id => _id;
 
@@ -19,9 +20,9 @@ class Note {
 
   String get date => _date;
 
-  set title(String newtitle) {
-    if (newtitle.length <= 200) {
-      this._title = newtitle;
+  set title(String newTitle) {
+    if (newTitle.length <= 200) {
+      this._title = newTitle;
     }
   }
 
@@ -43,8 +44,8 @@ class Note {
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
-    if(id != null){
-      map['id']= _id;
+    if (id != null) {
+      map['id'] = _id;
     }
     map['title'] = _title;
     map['description'] = _description;
@@ -53,7 +54,7 @@ class Note {
 
     return map;
   }
-  Note.fromMapObject(Map<String,dynamic>map){
+  Note.fromMapObject(Map<String, dynamic> map){
     this._id = map['id'];
     this._title = map['title'];
     this._description = map['description'];
