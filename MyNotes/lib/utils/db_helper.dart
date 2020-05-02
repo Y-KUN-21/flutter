@@ -8,12 +8,12 @@ class DbHelper {
   static DbHelper _databaseHelper;
   static Database _database;
 
-  String noteTable = "notes";
-  String colId = "id";
-  String colTitle = "title";
-  String colDescription = "description";
-  String colPriority = "priority";
-  String colDate = "date";
+  String noteTable = 'notes';
+  String colId = 'id';
+  String colTitle = 'title';
+  String colDescription = 'description';
+  String colPriority = 'priority';
+  String colDate = 'date';
 
   DbHelper._createInstance();
 
@@ -33,7 +33,7 @@ class DbHelper {
 
   Future<Database> initializeDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + "notes.db";
+    String path = directory.path + 'notes.db';
 
     var notesDatabase =
         await openDatabase(path, version: 1, onCreate: _creatdb);
@@ -43,7 +43,7 @@ class DbHelper {
   void _creatdb(Database db, int newVersion) async {
     await db.execute(
         'CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, '
-        '$colDescription TEXT, $colPriority INTEGER, $colDate TEXT)');
+        '$colDescription TEXT, $colDate TEXT, $colPriority INTEGER)');
   }
 
   //fetch all objects

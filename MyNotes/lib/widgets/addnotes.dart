@@ -31,8 +31,10 @@ class _AddNoteState extends State<AddNote> {
   }
 
   void updateDescription() {
-    note.title = descriptionController.text;
+    note.description = descriptionController.text;
   }
+
+  final key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +61,15 @@ class _AddNoteState extends State<AddNote> {
             color: Color(0xff333945),
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(20), topLeft: Radius.circular(20))),
-        child: ListView(children: <Widget>[
-          titlefield(),
-          descriptionfield(),
-          dropDown(),
-        ]),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _save();
-        },
-        child: Icon(Icons.check),
-        backgroundColor: Colors.redAccent,
+        child: Form(
+          key: key,
+          child: ListView(children: <Widget>[
+            titlefield(),
+            descriptionfield(),
+            dropDown(),
+            savebtn(),
+          ]),
+        ),
       ),
     );
   }
@@ -78,13 +77,20 @@ class _AddNoteState extends State<AddNote> {
   Widget titlefield() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          int len = value.length;
+          if (len == 0) {
+            return "Title cannot be negative";
+          }
+          return null;
+        },
         controller: titleController,
         onChanged: (value) {
           upadateTitle();
         },
         style: TextStyle(
-             color: Color(0xffffffff),
+            color: Color(0xffffffff),
             fontWeight: FontWeight.w400,
             fontSize: 20,
             letterSpacing: 1.0),
@@ -107,7 +113,7 @@ class _AddNoteState extends State<AddNote> {
   Widget descriptionfield() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
-      child: TextField(
+      child: TextFormField(
         maxLines: 8,
         controller: descriptionController,
         onChanged: (value) {
@@ -136,7 +142,7 @@ class _AddNoteState extends State<AddNote> {
 
   Widget dropDown() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 50),
         child: Theme(
           data: Theme.of(context).copyWith(
             canvasColor: Color(0xffEA7773),
@@ -175,6 +181,38 @@ class _AddNoteState extends State<AddNote> {
         ));
   }
 
+  Widget savebtn() {
+    return Center(
+      child: RaisedButton(
+        padding: const EdgeInsets.fromLTRB(30, 8, 30, 8),
+        textColor: Colors.white,
+        color: Color(0xff333945),
+        shape: RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(30.0),
+          side: BorderSide(color: Colors.white),
+        ),
+        splashColor: Color(0xffEA7773),
+        animationDuration: Duration(seconds: 2),
+        onPressed: () {
+          if (this.key.currentState.validate()) {
+            setState(() {
+              _save();
+            });
+          }
+        },
+        child: new Text(
+          "Save",
+          style: GoogleFonts.manrope(
+            fontWeight: FontWeight.w400,
+            fontSize: 25,
+            color: Color(0xffffffff),
+            letterSpacing: 2.0,
+          ),
+        ),
+      ),
+    );
+  }
+
   void updatePriorityAsInt(String value) {
     switch (value) {
       case 'High':
@@ -187,10 +225,10 @@ class _AddNoteState extends State<AddNote> {
   }
 
   void _save() async {
-    note.date = DateFormat.yMMMd().format(DateTime.now());
+    note.date = DateFormat.yMMMEd().format(DateTime.now());
     if (note.id != null) {
       await helper.updateNote(note);
-    } else  {
+    } else {
       await helper.insertNote(note);
     }
     Navigator.pop(context, true);

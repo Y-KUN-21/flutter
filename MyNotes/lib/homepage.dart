@@ -7,7 +7,6 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 
-
 class Homepage extends StatefulWidget {
   @override
   _HomepageState createState() => _HomepageState();
@@ -18,7 +17,8 @@ class _HomepageState extends State<Homepage> {
   Note note;
   List<Note> notelist;
   int count = 0;
-  String date =  DateFormat.yMMMMEEEEd().format(DateTime.now());
+  String description;
+  String date = DateFormat.yMMMMEEEEd().format(DateTime.now());
   Color priorityColor(int priority) {
     switch (priority) {
       case 1:
@@ -68,7 +68,7 @@ class _HomepageState extends State<Homepage> {
       updateListView();
     }
     return Scaffold(
-     backgroundColor: Color(0xffEA7773),
+      backgroundColor: Color(0xffEA7773),
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -93,7 +93,9 @@ class _HomepageState extends State<Homepage> {
                                 letterSpacing: 3.0,
                                 color: Colors.white),
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Text(
                             '$date',
                             style: GoogleFonts.manrope(
@@ -118,48 +120,44 @@ class _HomepageState extends State<Homepage> {
             ),
             Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xff333945),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25),
-                        topLeft: Radius.circular(25))),
-                        
-                  child: ListView.builder(
-                      itemCount: count,
-                      itemBuilder: (context, int position) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
-                          
-                          child: Container(
-                              height: 100,
-                              child: Card(
-                                child: Dismissible(
-                                  background: dismissalbg(),
-                                  direction: DismissDirection.endToStart,
-                                  key: UniqueKey(),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return AddNote(
-                                            this.notelist[position], "Edit note");
-                                      }));
-                                    },
-                                   
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: CircleAvatar(
-                                            
-                                            backgroundColor: priorityColor(
-                                                this.notelist[position].priority),
-                                            radius: 27,
-
-                                            child: priorityIcon(
-                                                this.notelist[position].priority),
-                                          ),
-                                          title: Text((this.notelist[position].title),
+              decoration: BoxDecoration(
+                  color: Color(0xff333945),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(25),
+                      topLeft: Radius.circular(25))),
+              child: ListView.builder(
+                  itemCount: count,
+                  itemBuilder: (context, int position) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
+                      child: Container(
+                          height: 100,
+                          child: Card(
+                            child: Dismissible(
+                              background: dismissalbg(),
+                              direction: DismissDirection.endToStart,
+                              key: UniqueKey(),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return AddNote(
+                                        this.notelist[position], "Edit note");
+                                  }));
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    ListTile(
+                                      leading: CircleAvatar(
+                                        backgroundColor: priorityColor(
+                                            this.notelist[position].priority),
+                                        radius: 27,
+                                        child: priorityIcon(
+                                            this.notelist[position].priority),
+                                      ),
+                                      title:
+                                          Text((this.notelist[position].title),
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.manrope(
@@ -168,44 +166,34 @@ class _HomepageState extends State<Homepage> {
                                                 color: Colors.white,
                                                 letterSpacing: 1.0,
                                               )),
-                                          subtitle:
-                                              Text((this.notelist[position].date),
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: GoogleFonts.manrope(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 15,
-                                                    color: Colors.white,
-                                                    letterSpacing: 1.0,
-                                                  )),
-                                          trailing:
-                                              Text((this.notelist[position].date),
-                                                  style: GoogleFonts.manrope(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 15,
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.0,
-                                                  )),
-                                        ),
-                                      ],
+                                      subtitle:
+                                          Text((this.notelist[position].date),
+                                              maxLines: 1,
+                                              style: GoogleFonts.manrope(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 15,
+                                                color: Colors.white,
+                                                letterSpacing: 1.0,
+                                              )),
                                     ),
-                                  ),
-                                  onDismissed: (direction) {
-                                    setState(() {
-                                      _delete(context, notelist[position]);
-                                      updateListView();
-                                    });
-                                  },
+                                  ],
                                 ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                color: Color(0xff333945),
-                              
-                              )),
-                        );
-                      }),
-                )),
+                              ),
+                              onDismissed: (direction) {
+                                setState(() {
+                                  _delete(context, notelist[position]);
+                                  updateListView();
+                                });
+                              },
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            color: Color(0xff333945),
+                          )),
+                    );
+                  }),
+            )),
           ],
         ),
       ),
