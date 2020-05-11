@@ -7,7 +7,6 @@ class ApiServices {
     try {
       final response = await http.get(url);
       if (200 == response.statusCode) {
-        print(response.toString());
 
         final data = dataFromJson(response.body);
 
